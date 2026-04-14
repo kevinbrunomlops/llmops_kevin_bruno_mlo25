@@ -1,0 +1,6 @@
+- Rätta stavfel exempelvis "andledningarna" → "anledningarna", "tal rädd" → "talarädd" eller "rädd för att tala".
+- Använd rätt punkter och kommatecken för att undvika långa meningar och förbättra läsbarheten.
+- Variera ordval och undvik upprepningar (t.ex. "rädd" flera gånger i rad).
+- Förbättra referensen till Peter Letmark: ange artikelens titel och korrekt datumformat.
+- Utveckla resonemanget med fler exempel och koppla tydligt till källan.
+- Arbeta med textens disposition: tydlig inledning, argument och avslutning.
