@@ -19,19 +19,25 @@ app = FastAPI(
 def root():
     return {"message": "Restaurant Generator API is running"}
 
-@app.post("/restaurant/generate", response_model=RestaurantResponse)
-def create_restaurants(request: RestaurantRequest):
+@app.post("/restaurants/generate", response_model=RestaurantResponse)
+def create_restaurant(request: RestaurantRequest):
     try:
+        print("Incoming request:", request)
+
         restaurant = generate_restaurant(
             location=request.location,
             cuisine=request.cuisine,
         )
+        print("Generated restaurant:", restaurant)
+
         insert_restaurant(restaurant)
+
         return RestaurantResponse(
             message="Restaurant generated and stored succesfully",
             restaurant=restaurant,
         )
     except Exception as e:
+        print("ERROR in create_restaurant:", repr(e))
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/restaurants", response_model=list[RestaurantRow])

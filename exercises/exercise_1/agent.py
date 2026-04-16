@@ -1,23 +1,20 @@
 from pydantic_ai import Agent
-from models import RestaurantList
+from models import RestaurantSearcher
+from dotenv import load_dotenv
+from constants import MODEL_LARGE
+load_dotenv()
 
 restaurant_searcher_agent = Agent(
-    "openrouter:nvidia/nemotron-3-super-120b-a12b:free",
+    model=MODEL_LARGE,
     system_prompt=""" 
-You are a restaurant recommendation assistant. 
-The user gives you a location.
-Return exactly 5 restaurants near that place. 
-It is allowed to invent restaurant if needed, 
-but they should still look realistic and relevant to the location.
-Vary cuisine types.
-Keep descriptions short and useful.
-Ratings must be between 1 and 5.
-Price level must be one of: $, $$, $$$, $$$$.
+    You generate exactly one restaurant based on the user's location and desired cuisine. 
+    Return the fields: name, type_of_food, price_level, rating, 
+    short_description, opening_hours, and location.
 
-""", output_type=RestaurantList
+""", output_type=RestaurantSearcher
 )
 
-def generate_restaurant(location: str, cuisine: str) -> RestaurantList: 
+def generate_restaurant(location: str, cuisine: str) -> RestaurantSearcher: 
     prompt = (
         f"Create one realistric restaurant for this request.\n"
         f"Location: {location}\n"

@@ -1,5 +1,5 @@
 import duckdb 
-from models import RestaurantList
+from models import RestaurantSearcher
 
 DB_PATH = "restaurants.duckdb"
 
@@ -13,9 +13,9 @@ def init_db():
         CREATE TABLE IF NOT EXISTS restaurants (
         id INTEGER PRIMARY KEY,
         name VARCHAR,
-        cuisine VARCHAR,
+        type_of_food VARCHAR,
         price_level VARCHAR, 
-        rating DOBLE, 
+        rating DOUBLE, 
         short_description VARCHAR,
         opening_hours VARCHAR,
         location VARCHAR
@@ -28,14 +28,14 @@ def get_next_id(con) -> int:
     result = con.execute("SELECT COALESCE(MAX(id), 0) + 1 FROM restaurants").fetchone()
     return result[0]
 
-def insert_restaurant(restaurant: RestaurantList) -> int:
+def insert_restaurant(restaurant: RestaurantSearcher) -> int:
     con = get_connection()
     new_id = get_next_id(con)
 
     con.execute(
         """ 
         INSERT INTO restaurants (
-        id, name, cuisine, price_level, rating, 
+        id, name, type_of_food, price_level, rating, 
         short_description, opening_hours, location
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -43,9 +43,8 @@ def insert_restaurant(restaurant: RestaurantList) -> int:
     [
         new_id,
         restaurant.name,
-        restaurant.cuisine,
+        restaurant.type_of_food,
         restaurant.price_level,
-        restaurant.rating,
         restaurant.rating,
         restaurant.short_description,
         restaurant.opening_hours,
@@ -59,7 +58,7 @@ def fetch_all_restaurants():
     con = get_connection()
     rows = con.execute(
         """ 
-        SELECT id, name, cuisine, price_level, rating, 
+        SELECT id, name, type_of_food, price_level, rating, 
         short_description, opening_hours, location
         FROM restaurants
         ORDER BY id DESC
@@ -71,7 +70,7 @@ def fetch_all_restaurants():
         {
             "id": row[0],
             "name": row[1],
-            "cuisine": row[2],
+            "type_of_food": row[2],
             "price_level": row[3],
             "rating": row[4],
             "short_description": row[5],
