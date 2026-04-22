@@ -8,6 +8,7 @@ dependencies = [
     "duckdb>=1.5.2",
     "fastapi>=0.135.3",
     "ipykernel>=7.2.0",
+    "lancedb==0.17",
     "litellm>=1.83.0",
     "mlflow>=3.11",
     "pandas<3",
